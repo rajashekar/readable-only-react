@@ -22,9 +22,11 @@ class App extends Component {
   render() {
     const { categories,posts } = this.state
     return (
-      <div>
-          <Categories categories={categories}/>
-          <Posts posts={posts}/>
+      <div className='ContentWrapper'>
+          <div className='grid_page'>
+            <Categories categories={categories}/>
+            <Posts posts={posts}/>
+        </div>
       </div>
     );
   }
