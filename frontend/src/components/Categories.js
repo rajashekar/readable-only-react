@@ -4,14 +4,14 @@ import '../App.css';
 
 class Categories extends Component {
   render() {
-    const { categories } = this.props
+    const { categories, onSelectCategory } = this.props
     return (
       <div className="layout_3col_left">
           <h4>Categories</h4>
-          <Link to='/'>all</Link>
+          <Link to='/' onClick={e => onSelectCategory(e.target.innerText)}>all</Link>
           {categories.map(category => (
            <div key={category.name}>
-               <Link to={category.name}>
+               <Link to={category.name} onClick={e => onSelectCategory(e.target.innerText)}>
                 {category.name}
                </Link>
            </div>

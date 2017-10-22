@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Timestamp from 'react-timestamp'
 import '../App.css';
 
 class Posts extends Component {
@@ -15,7 +16,10 @@ class Posts extends Component {
                     <div className="arrow down"></div>
                 </div>
                 <div>
-                    <div><b>{post.title}</b> by <i>{post.author}</i></div>
+                    <div>
+                        <b>{post.title}</b> by <i>{post.author}</i>
+                        &nbsp; (posted on <Timestamp time={post.timestamp/1000}/>)
+                    </div>
                     <div>{post.body}</div>
                     <div>{post.commentCount} comments</div>
                 </div>
