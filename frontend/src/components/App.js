@@ -17,10 +17,33 @@ class App extends Component {
     ReadableAPI.getCategories().then((categories) => {
         this.setState({categories})
     });
-    var category = window.location.pathname === "/"? 
+    var context = window.location.pathname === "/"? 
         "all": window.location.pathname.substr(1);
-    this.onSelectCategory(category);
+    if(context === "all" || this.state.categories.indexOf(context)>-1) {
+        this.onSelectCategory(context);
+    }
   }
+
+  vote = (type,option,id) => {
+    ReadableAPI.vote(type,option,id).then((post) => {
+        this.setUpdatedPosts(this.state.posts,post,this.state.sortBy)
+    });
+  }
+
+  setUpdatedPosts = (currentPosts, post, sortBy) => {
+    var posts = currentPosts.reduce(this.updatePosts(post),[]);
+    this.sortPosts(posts,sortBy)
+  }
+  updatePosts = (updatedPost) => (
+    (allPosts,post) => {
+        if(post.id === updatedPost.id) {
+            post.voteScore = updatedPost.voteScore
+        }
+        allPosts.push(post)
+        return allPosts
+    }
+  )
+
 
   onSelectCategory = (category) => {
     // if category is all get all posts
@@ -55,7 +78,11 @@ class App extends Component {
             <Categories categories={categories} onSelectCategory={this.onSelectCategory}/>
             <Route exact path={window.location.pathname} render={() => (
             <div className='grid_page'>
-                <Posts posts={posts} sortPosts={this.sortPosts}/>
+                <Posts 
+                    posts={posts} 
+                    sortPosts={this.sortPosts}
+                    vote={this.vote} 
+                />
             </div>
             )}/>
         </div>

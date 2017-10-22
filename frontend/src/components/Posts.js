@@ -4,7 +4,7 @@ import '../App.css';
 
 class Posts extends Component {
   render() {
-    const { posts, sortPosts } = this.props
+    const { posts, sortPosts,vote } = this.props
     return (
       <div className="layout_3col_center">
           <div><b className="sortby">Posts</b> sort by : &nbsp;
@@ -16,9 +16,9 @@ class Posts extends Component {
           { posts.map(post => (
             <div className="post" key={post.id}>
                 <div className="midcol">
-                    <div className="arrow up"></div>
+                    <div className="arrow up" onClick={() => vote("posts","upVote",post.id)}></div>
                     <div className="score">{post.voteScore}</div>
-                    <div className="arrow down"></div>
+                    <div className="arrow down" onClick={() => vote("posts","downVote",post.id)}></div>
                 </div>
                 <div>
                     <div>
