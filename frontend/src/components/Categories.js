@@ -7,15 +7,19 @@ class Categories extends Component {
     const { categories, onSelectCategory } = this.props
     return (
       <div className="layout_3col_left">
-          <h4>Categories</h4>
-          <Link to='/' onClick={e => onSelectCategory(e.target.innerText)}>all</Link>
-          {categories.map(category => (
-           <div key={category.name}>
-               <Link to={category.name} onClick={e => onSelectCategory(e.target.innerText)}>
-                {category.name}
-               </Link>
-           </div>
-          ))}
+          <div><b>Categories</b></div>
+          <div className="category">
+            <div>
+                <Link to='/' onClick={e => onSelectCategory(e.target.innerText)}>all</Link>
+            </div>
+            {categories.map(category => (
+            <div key={category.name}>
+                <Link to={category.name} onClick={e => onSelectCategory(e.target.innerText)}>
+                    {category.name}
+                </Link>
+            </div>
+            ))}
+          </div>
       </div>
     );
   }

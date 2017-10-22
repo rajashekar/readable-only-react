@@ -4,10 +4,15 @@ import '../App.css';
 
 class Posts extends Component {
   render() {
-    const { posts } = this.props
+    const { posts, sortPosts } = this.props
     return (
       <div className="layout_3col_center">
-          <h4>Posts</h4>
+          <div><b className="sortby">Posts</b> sort by : &nbsp;
+              <select onChange={e => sortPosts(posts, e.target.value)}>
+                  <option value="votes">votes</option>
+                  <option value="date">date</option>
+              </select>
+          </div>
           { posts.map(post => (
             <div className="post" key={post.id}>
                 <div className="midcol">
