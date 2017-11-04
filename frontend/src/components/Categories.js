@@ -14,7 +14,7 @@ class Categories extends Component {
             </div>
             {categories.map(category => (
             <div key={category.name}>
-                <Link to={category.name} onClick={e => onSelectCategory(e.target.innerText)}>
+                <Link to={`/category/${category.name}`} onClick={e => onSelectCategory(e.target.innerText)}>
                     {category.name}
                 </Link>
             </div>

@@ -49,6 +49,8 @@
 }
 .post {
     display: block;
+    text-decoration: none;
+    color: black;
     -webkit-margin-before: 1.33em;
     -webkit-margin-after: 1.33em;
     -webkit-margin-start: 0px;
@@ -93,6 +95,9 @@
     height: 25px;
     margin-top: 50px;
     margin-left: 50px;
+}
+.posttitle {
+    cursor: pointer;
 }
 
 @keyframes App-logo-spin {

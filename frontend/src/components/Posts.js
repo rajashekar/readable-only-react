@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
 import Timestamp from 'react-timestamp'
 import '../App.css';
 
 class Posts extends Component {
   render() {
-    const { posts, sortPosts,vote } = this.props
+    const { posts, sortPosts,vote,onSelectPost } = this.props
     return (
       <div className="layout_3col_center">
           <div><b className="sortby">Posts</b> sort by : &nbsp;
@@ -14,7 +15,7 @@ class Posts extends Component {
               </select>
           </div>
           { posts.map(post => (
-            <div className="post" key={post.id}>
+          <Link to={`/post/${post.id}`} className="post" onClick={() => onSelectPost(post.id)} key={post.id}>
                 <div className="midcol">
                     <div className="arrow up" onClick={() => vote("posts","upVote",post.id)}></div>
                     <div className="score">{post.voteScore}</div>
@@ -22,13 +23,13 @@ class Posts extends Component {
                 </div>
                 <div>
                     <div>
-                        <b>{post.title}</b> by <i>{post.author}</i>
+                        <b className="posttitle">{post.title}</b> by <i>{post.author}</i>
                         &nbsp; (posted on <Timestamp time={post.timestamp/1000}/>)
                     </div>
                     <div>{post.body}</div>
                     <div>{post.commentCount} comments</div>
                 </div>
-            </div>
+            </Link>
           ))}
       </div>
     );
