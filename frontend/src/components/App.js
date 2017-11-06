@@ -12,6 +12,7 @@ class App extends Component {
   state = {
     categories : [],
     posts : [],
+    comments: [],
     selectedPost : {},
     sortBy : 'votes',
     view : ""
@@ -33,16 +34,22 @@ class App extends Component {
   }
 
   vote = (type,option,id) => {
-    ReadableAPI.vote(type,option,id).then((post) => {
-        this.setUpdatedPosts(this.state.posts,post,this.state.sortBy)
-    });
+    if(type === 'posts') {
+        ReadableAPI.vote(type,option,id).then((result) => {
+            this.setUpdatedResults(type,this.state.posts,result,this.state.sortBy)
+        });
+    } else {
+        ReadableAPI.vote(type,option,id).then((result) => {
+            this.setUpdatedResults(type,this.state.comments,result,"votes")
+        });
+    }
   }
 
-  setUpdatedPosts = (currentPosts, post, sortBy) => {
-    var posts = currentPosts.reduce(this.updatePosts(post),[]);
-    this.sortPosts(posts,sortBy)
+  setUpdatedResults = (type, currentPosts, post, sortBy) => {
+    var posts = currentPosts.reduce(this.updateResults(post),[]);
+    this.sort(type, posts,sortBy)
   }
-  updatePosts = (updatedPost) => (
+  updateResults = (updatedPost) => (
     (allPosts,post) => {
         if(post.id === updatedPost.id) {
             post.voteScore = updatedPost.voteScore
@@ -57,11 +64,11 @@ class App extends Component {
     this.setState({view : "category"})
     if(category === "all") {
         ReadableAPI.getPosts().then((posts) => {
-            this.sortPosts(posts, this.state.sortBy)
+            this.sort("posts", posts, this.state.sortBy)
         });
     } else {
         ReadableAPI.getCategoryPosts(category).then((posts) => {
-            this.sortPosts(posts, this.state.sortBy)
+            this.sort("posts", posts, this.state.sortBy)
         });
     }
     console.log("category: ",category)
@@ -71,22 +78,28 @@ class App extends Component {
     console.log(postid);
     this.setState({view : "post"})
     ReadableAPI.getPost(postid).then((post) => {
-        console.log(post)
         this.setState({selectedPost: post})
+    })
+    ReadableAPI.getComments(postid).then((comments) => {
+        this.setState({comments});
     })
   }
 
-  sortPosts = (posts, sortBy) => {
+  sort = (type, posts, sortBy) => {
       // sort before to set state
-      if(sortBy === 'votes') {
-         this.setState({posts: posts.sort((a,b) => b.voteScore-a.voteScore)});
+      if(type === 'posts') {
+        if(sortBy === 'votes') {
+            this.setState({posts: posts.sort((a,b) => b.voteScore-a.voteScore)});
+        } else {
+            this.setState({posts: posts.sort((a,b) => b.timestamp-a.timestamp)});
+        }
       } else {
-         this.setState({posts: posts.sort((a,b) => b.timestamp-a.timestamp)});
+        this.setState({comments: posts.sort((a,b) => b.voteScore-a.voteScore)});
       }
   }
 
   render() {
-    const { categories,posts,selectedPost,view } = this.state
+    const { categories,posts,comments,selectedPost,view } = this.state
     console.log(view)
     return (
       <div>
@@ -99,7 +112,7 @@ class App extends Component {
                 <div className='grid_page'>
                     <Posts 
                         posts={posts} 
-                        sortPosts={this.sortPosts}
+                        sort={this.sort}
                         vote={this.vote} 
                         onSelectPost={this.onSelectPost}
                     />
@@ -113,6 +126,8 @@ class App extends Component {
             <div>
                 <PostView 
                     post={selectedPost}
+                    comments={comments}
+                    vote={this.vote}
                 />
             </div>
         )}/>

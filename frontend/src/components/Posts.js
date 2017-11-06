@@ -5,11 +5,11 @@ import '../App.css';
 
 class Posts extends Component {
   render() {
-    const { posts, sortPosts,vote,onSelectPost } = this.props
+    const { posts, sort,vote,onSelectPost } = this.props
     return (
       <div className="layout_3col_center">
           <div><b className="sortby">Posts</b> sort by : &nbsp;
-              <select onChange={e => sortPosts(posts, e.target.value)}>
+              <select onChange={e => sort("posts", posts, e.target.value)}>
                   <option value="votes">votes</option>
                   <option value="date">date</option>
               </select>
