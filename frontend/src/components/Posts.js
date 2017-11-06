@@ -15,7 +15,7 @@ class Posts extends Component {
               </select>
           </div>
           { posts.map(post => (
-          <Link to={`/post/${post.id}`} className="post" onClick={() => onSelectPost(post.id)} key={post.id}>
+          <Link to={`/post/${post.id}`} className="post" key={post.id}>
                 <div className="midcol">
                     <div className="arrow up" onClick={() => vote("posts","upVote",post.id)}></div>
                     <div className="score">{post.voteScore}</div>
@@ -23,7 +23,7 @@ class Posts extends Component {
                 </div>
                 <div>
                     <div>
-                        <b className="posttitle">{post.title}</b> by <i>{post.author}</i>
+                        <b className="posttitle" onClick={() => onSelectPost(post.id)}>{post.title}</b> by <i>{post.author}</i>
                         &nbsp; (posted on <Timestamp time={post.timestamp/1000}/>)
                     </div>
                     <div>{post.body}</div>
