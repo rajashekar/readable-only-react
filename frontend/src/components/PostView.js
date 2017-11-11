@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Timestamp from 'react-timestamp'
 import Comments from './Comments';
+import CreateComment from './createComment';
 
 class PostView extends Component {
 
@@ -19,6 +20,10 @@ class PostView extends Component {
                     <Comments
                         comments={comments}
                         vote={vote}
+                    />
+                </div>
+                <div>
+                    <CreateComment
                     />
                 </div>
             </div>

@@ -14,8 +14,7 @@ class App extends Component {
     posts : [],
     comments: [],
     selectedPost : {},
-    sortBy : 'votes',
-    view : ""
+    sortBy : 'votes'
   }
 
   componentDidMount() {
@@ -61,7 +60,6 @@ class App extends Component {
 
   onSelectCategory = (category) => {
     // if category is all get all posts
-    this.setState({view : "category"})
     if(category === "all") {
         ReadableAPI.getPosts().then((posts) => {
             this.sort("posts", posts, this.state.sortBy)
@@ -76,7 +74,6 @@ class App extends Component {
 
   onSelectPost = (postid) => {
     console.log(postid);
-    this.setState({view : "post"})
     ReadableAPI.getPost(postid).then((post) => {
         this.setState({selectedPost: post})
     })
@@ -98,41 +95,47 @@ class App extends Component {
       }
   }
 
-  render() {
-    const { categories,posts,comments,selectedPost,view } = this.state
-    console.log(view)
+  renderCategory = () => {
+    const { categories,posts } = this.state
     return (
-      <div>
-        {view === "category" && 
-        <div className='ContentWrapper'>
-        <button className="button">Create Post</button>
-            <Route path="/" render={() => (
-            <div>
-                <Categories categories={categories} onSelectCategory={this.onSelectCategory}/>
-                <div className='grid_page'>
-                    <Posts 
-                        posts={posts} 
-                        sort={this.sort}
-                        vote={this.vote} 
-                        onSelectPost={this.onSelectPost}
-                    />
-                </div>
-            </div>
-        )}/>
-        </div>
-        }
-        {view === "post" && 
-        <Route path="/post" render={({history}) => (
-            <div>
-                <PostView 
-                    post={selectedPost}
-                    comments={comments}
-                    vote={this.vote}
+        <div>
+            <button className="button">Create Post</button>
+            <Categories categories={categories} onSelectCategory={this.onSelectCategory}/>
+            <div className='grid_page'>
+                <Posts 
+                    posts={posts} 
+                    sort={this.sort}
+                    vote={this.vote} 
+                    onSelectPost={this.onSelectPost}
                 />
             </div>
-        )}/>
-        }
-      </div>
+        </div>
+    )
+  }
+
+  renderPosts = (history) => {
+    const { comments,selectedPost } = this.state
+    return (
+        <div>
+            <PostView 
+                post={selectedPost}
+                comments={comments}
+                vote={this.vote}
+                onClick={() => {
+                    history.push('/')
+                }}
+            />
+        </div>
+    )
+  }
+
+  render() {
+    return (
+        <div className='ContentWrapper'>
+            <Route exact path="/" render={() => this.renderCategory()}/>
+            <Route path="/category" render={() => this.renderCategory()}/>
+            <Route path="/post" render={({history}) => this.renderPosts()}/>
+        </div>
     );
   }
 }
