@@ -78,6 +78,7 @@
 }
 .sortby {
     padding-right: 20px;
+    padding-left: 20px;
 }
 .midcol {
     float: left;
@@ -93,14 +94,13 @@
 .button {
     width: 116px;
     height: 25px;
-    margin-left: 20px;
+    margin-right: 20px;
     margin-bottom: 20px;
 }
 .posttitle {
     cursor: pointer;
 }
 .postdetail {
-    margin-top: 50px;
     margin-left: 20px;
 }
 

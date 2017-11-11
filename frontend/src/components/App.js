@@ -99,7 +99,6 @@ class App extends Component {
     const { categories,posts } = this.state
     return (
         <div>
-            <button className="button">Create Post</button>
             <Categories categories={categories} onSelectCategory={this.onSelectCategory}/>
             <div className='grid_page'>
                 <Posts 
@@ -113,7 +112,7 @@ class App extends Component {
     )
   }
 
-  renderPosts = (history) => {
+  renderPost = (history) => {
     const { comments,selectedPost } = this.state
     return (
         <div>
@@ -134,7 +133,7 @@ class App extends Component {
         <div className='ContentWrapper'>
             <Route exact path="/" render={() => this.renderCategory()}/>
             <Route path="/category" render={() => this.renderCategory()}/>
-            <Route path="/post" render={({history}) => this.renderPosts()}/>
+            <Route path="/post" render={({history}) => this.renderPost()}/>
         </div>
     );
   }

@@ -8,7 +8,9 @@ class Posts extends Component {
     const { posts, sort,vote,onSelectPost } = this.props
     return (
       <div className="layout_3col_center">
-          <div><b className="sortby">Posts</b> sort by : &nbsp;
+          <div>
+              <button className="button">Create Post</button>
+              <b className="sortby">Posts</b> sort by : &nbsp;
               <select onChange={e => sort("posts", posts, e.target.value)}>
                   <option value="votes">votes</option>
                   <option value="date">date</option>
