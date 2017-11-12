@@ -3,6 +3,10 @@ import {Link} from 'react-router-dom'
 import Timestamp from 'react-timestamp'
 import '../App.css';
 
+/*
+ * For showing post details
+ * Gives option for voting & sorting
+ */
 class Posts extends Component {
   render() {
     const { posts, sort,vote,onSelectPost } = this.props

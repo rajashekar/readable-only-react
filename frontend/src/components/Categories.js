@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import '../App.css';
 
+/**
+ * This component will show categories on right side.
+ * on select will redirect to appropriate category
+ */
 class Categories extends Component {
   render() {
     const { categories, onSelectCategory } = this.props

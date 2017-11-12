@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 
-class CreateComment extends Component {
+/*
+ * To create post
+ */ 
+class CreatePost extends Component {
     render() {
         return (
             <div>
-                Comment on : 
             </div>
         );
     }
 }
 
-export default CreateComment;
+export default CreatePost;

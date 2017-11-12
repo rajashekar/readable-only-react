@@ -6,6 +6,10 @@ import PostView from './PostView';
 import * as ReadableAPI from '../api/ReadableAPI'
 import '../App.css';
 
+/*
+ * Main component for this app
+ */
+
 class App extends Component {
 
   // State object
@@ -17,6 +21,7 @@ class App extends Component {
     sortBy : 'votes'
   }
 
+   // Initially mount all Categories and all Posts
   componentDidMount() {
     var context = window.location.pathname === "/"? 
         "all": window.location.pathname.substr(1);
@@ -32,6 +37,7 @@ class App extends Component {
     }
   }
 
+  // for voting both posts & comments
   vote = (type,option,id) => {
     if(type === 'posts') {
         ReadableAPI.vote(type,option,id).then((result) => {
@@ -44,6 +50,7 @@ class App extends Component {
     }
   }
 
+  // update the results
   setUpdatedResults = (type, currentPosts, post, sortBy) => {
     var posts = currentPosts.reduce(this.updateResults(post),[]);
     this.sort(type, posts,sortBy)
@@ -58,6 +65,7 @@ class App extends Component {
     }
   )
 
+  // on select category get all posts of category
   onSelectCategory = (category) => {
     // if category is all get all posts
     if(category === "all") {
@@ -72,6 +80,7 @@ class App extends Component {
     console.log("category: ",category)
   }
 
+  // on select post get all post details of that post
   onSelectPost = (postid) => {
     console.log(postid);
     ReadableAPI.getPost(postid).then((post) => {
@@ -82,6 +91,7 @@ class App extends Component {
     })
   }
 
+  // for sorting based on votes or date
   sort = (type, posts, sortBy) => {
       // sort before to set state
       if(type === 'posts') {
@@ -95,6 +105,7 @@ class App extends Component {
       }
   }
 
+  // For rendering categories
   renderCategory = () => {
     const { categories,posts } = this.state
     return (
@@ -112,6 +123,7 @@ class App extends Component {
     )
   }
 
+  // For rendering Posts
   renderPost = (history) => {
     const { comments,selectedPost } = this.state
     return (
@@ -128,6 +140,7 @@ class App extends Component {
     )
   }
 
+  // Main render method
   render() {
     return (
         <div className='ContentWrapper'>

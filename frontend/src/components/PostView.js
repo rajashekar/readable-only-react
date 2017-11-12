@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import Timestamp from 'react-timestamp'
 import Comments from './Comments';
-import CreateComment from './createComment';
+import CreateComment from './CreateComment';
 
+/*
+ * To show complete post with details
+ */
 class PostView extends Component {
 
     render() {

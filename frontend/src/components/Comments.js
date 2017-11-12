@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Timestamp from 'react-timestamp'
 
+/*
+ * To show comments of post
+ * Gives option for voting
+ */
 class Comments extends Component {
     render() {
         const {comments,vote} = this.props
