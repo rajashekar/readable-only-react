@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom'
 import Categories from './Categories';
 import Posts from './Posts';
 import PostView from './PostView';
+import CreatePost from './CreatePost'
 import * as ReadableAPI from '../api/ReadableAPI'
 import '../App.css';
 
@@ -140,6 +141,16 @@ class App extends Component {
     )
   }
 
+  // For rendering create post
+  renderCreatePost = () => {
+    return (
+        <div>
+            <CreatePost
+            />
+        </div>
+    )
+  }
+
   // Main render method
   render() {
     return (
@@ -147,6 +158,7 @@ class App extends Component {
             <Route exact path="/" render={() => this.renderCategory()}/>
             <Route path="/category" render={() => this.renderCategory()}/>
             <Route path="/post" render={({history}) => this.renderPost()}/>
+            <Route path="/newpost" render={({history}) => this.renderCreatePost()}/>
         </div>
     );
   }

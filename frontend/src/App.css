@@ -91,17 +91,91 @@
     text-align: center;
     color: #c6c6c6;
 }
+
 .button {
     width: 116px;
     height: 25px;
     margin-right: 20px;
     margin-bottom: 20px;
 }
+
 .posttitle {
     cursor: pointer;
 }
+
 .postdetail {
     margin-left: 20px;
+}
+input[type=text], textarea{
+    width: 500px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    width: 600px;
+}
+
+.col-25 {
+    float: left;
+    width: 100px;
+    margin-top: 6px;
+}
+
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.text-area {
+    height: 100px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+@media (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
 }
 
 @keyframes App-logo-spin {

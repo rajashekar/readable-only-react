@@ -13,7 +13,7 @@ class Posts extends Component {
     return (
       <div className="layout_3col_center">
           <div>
-              <button className="button">Create Post</button>
+              <Link className="button" to={`/newpost`}>Create Post</Link>
               <b className="sortby">Posts</b> sort by : &nbsp;
               <select onChange={e => sort("posts", posts, e.target.value)}>
                   <option value="votes">votes</option>
@@ -21,12 +21,13 @@ class Posts extends Component {
               </select>
           </div>
           { posts.map(post => (
-          <Link to={`/post/${post.id}`} className="post" key={post.id}>
+            <div key={post.id}>
                 <div className="midcol">
                     <div className="arrow up" onClick={() => vote("posts","upVote",post.id)}></div>
                     <div className="score">{post.voteScore}</div>
                     <div className="arrow down" onClick={() => vote("posts","downVote",post.id)}></div>
                 </div>
+                <Link to={`/post/${post.id}`} className="post" key={post.id}>
                 <div>
                     <div>
                         <b className="posttitle" onClick={() => onSelectPost(post.id)}>{post.title}</b> by <i>{post.author}</i>
@@ -35,7 +36,8 @@ class Posts extends Component {
                     <div>{post.body}</div>
                     <div>{post.commentCount} comments</div>
                 </div>
-            </Link>
+                </Link>
+             </div> 
           ))}
       </div>
     );
