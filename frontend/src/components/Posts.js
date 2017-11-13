@@ -21,7 +21,7 @@ class Posts extends Component {
               </select>
           </div>
           { posts.map(post => (
-            <div key={post.id}>
+          !post.deleted && <div key={post.id}>
                 <div className="midcol">
                     <div className="arrow up" onClick={() => vote("posts","upVote",post.id)}></div>
                     <div className="score">{post.voteScore}</div>

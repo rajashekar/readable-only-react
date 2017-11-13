@@ -60,6 +60,7 @@ class App extends Component {
     (allPosts,post) => {
         if(post.id === updatedPost.id) {
             post.voteScore = updatedPost.voteScore
+            post.deleted = updatedPost.deleted
         }
         allPosts.push(post)
         return allPosts
@@ -115,6 +116,13 @@ class App extends Component {
     })
   }
 
+  // to delete post
+  deletePost = (postid) => {
+    ReadableAPI.deletePost(postid).then((result) => {
+        this.setUpdatedResults("posts",this.state.posts,result,this.state.sortBy)
+    })
+  }
+
   // For rendering categories
   renderCategory = () => {
     const { categories,posts } = this.state
@@ -142,6 +150,9 @@ class App extends Component {
                 post={selectedPost}
                 comments={comments}
                 vote={this.vote}
+                onDeletePost={(postid) => {
+                    this.deletePost(postid)
+                }}
                 onClick={() => {
                     history.push('/')
                 }}
@@ -156,7 +167,6 @@ class App extends Component {
         <div>
             <CreatePost
                 onCreatePost={(post) => {
-                    console.log(history)
                     this.createPost(post)
                     history.push('/')
                 }}

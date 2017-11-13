@@ -10,12 +10,12 @@ import CreateComment from './CreateComment';
 class PostView extends Component {
 
     render() {
-        const { post,comments,vote } = this.props
+        const { post,comments,vote,onDeletePost } = this.props
         return (
             <div className="postdetail">
                 <Link className='button' to='/'>Back</Link>
                 <button className="button">Edit</button>
-                <button className="button">Delete</button>
+                <Link className='button' onClick={() => onDeletePost(post.id)} to='/'>Delete</Link>
                 <h1>{post.title}</h1>
                 <div>Author: {post.author}</div>
                 <div>Posted: <Timestamp time={post.timestamp/1000}/></div>
