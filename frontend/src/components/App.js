@@ -4,6 +4,7 @@ import Categories from './Categories';
 import Posts from './Posts';
 import PostView from './PostView';
 import CreatePost from './CreatePost'
+import EditPost from './EditPost'
 import * as ReadableAPI from '../api/ReadableAPI'
 import '../App.css';
 
@@ -59,6 +60,8 @@ class App extends Component {
   updateResults = (updatedPost) => (
     (allPosts,post) => {
         if(post.id === updatedPost.id) {
+            post.title = updatedPost.title
+            post.body = updatedPost.body
             post.voteScore = updatedPost.voteScore
             post.deleted = updatedPost.deleted
         }
@@ -123,6 +126,13 @@ class App extends Component {
     })
   }
 
+  editPost = (post) => {
+    console.log(post)
+    ReadableAPI.editPost(post).then((result) => {
+        this.setUpdatedResults("posts",this.state.posts,result,this.state.sortBy)
+    })
+  }
+
   // For rendering categories
   renderCategory = () => {
     const { categories,posts } = this.state
@@ -153,6 +163,7 @@ class App extends Component {
                 onDeletePost={(postid) => {
                     this.deletePost(postid)
                 }}
+                onSelectPost={this.onSelectPost}
                 onClick={() => {
                     history.push('/')
                 }}
@@ -175,6 +186,22 @@ class App extends Component {
     )
   }
 
+  // For rendering Edit post
+  renderEditPost = (history) => {
+    const { selectedPost } = this.state
+    return (
+        <div>
+            <EditPost
+                post={selectedPost}
+                onEditPost={(post) => {
+                    this.editPost(post)
+                    history.push('/')
+                }}
+            />
+        </div>
+    )
+  }
+
   // Main render method
   render() {
     return (
@@ -183,6 +210,7 @@ class App extends Component {
             <Route path="/category" render={() => this.renderCategory()}/>
             <Route path="/post" render={({history}) => this.renderPost(history)}/>
             <Route path="/newpost" render={({history}) => this.renderCreatePost(history)}/>
+            <Route path="/editpost" render={({history}) => this.renderEditPost(history)}/>
         </div>
     );
   }
