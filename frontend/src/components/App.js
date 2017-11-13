@@ -106,6 +106,15 @@ class App extends Component {
       }
   }
 
+  // to create post
+  createPost = (post) => {
+    ReadableAPI.createPost(post).then((posts) => {
+        this.setState((state) => ({
+            posts: state.posts.concat([post])
+        }))
+    })
+  }
+
   // For rendering categories
   renderCategory = () => {
     const { categories,posts } = this.state
@@ -142,10 +151,15 @@ class App extends Component {
   }
 
   // For rendering create post
-  renderCreatePost = () => {
+  renderCreatePost = (history) => {
     return (
         <div>
             <CreatePost
+                onCreatePost={(post) => {
+                    console.log(history)
+                    this.createPost(post)
+                    history.push('/')
+                }}
             />
         </div>
     )
@@ -157,8 +171,8 @@ class App extends Component {
         <div className='ContentWrapper'>
             <Route exact path="/" render={() => this.renderCategory()}/>
             <Route path="/category" render={() => this.renderCategory()}/>
-            <Route path="/post" render={({history}) => this.renderPost()}/>
-            <Route path="/newpost" render={({history}) => this.renderCreatePost()}/>
+            <Route path="/post" render={({history}) => this.renderPost(history)}/>
+            <Route path="/newpost" render={({history}) => this.renderCreatePost(history)}/>
         </div>
     );
   }

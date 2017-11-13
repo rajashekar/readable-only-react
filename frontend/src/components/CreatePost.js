@@ -17,6 +17,16 @@ class CreatePost extends Component {
 		e.preventDefault()
 		const values = serializeForm(e.target, { hash: true })
         console.log(values)
+        const post = {...values,
+            id: Math.random().toString(36).substr(-8)+
+                Math.random().toString(36).substr(-8)+
+                Math.random().toString(36).substr(-8),
+            timestamp: Date.now(),
+            deleted: false,
+            voteScore: 1,
+            commentCount: 0
+        }
+        this.props.onCreatePost(post)
 	}
 
     render() {
