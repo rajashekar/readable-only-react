@@ -10,7 +10,8 @@ import CreateComment from './CreateComment';
 class PostView extends Component {
 
     render() {
-        const { post,comments,vote,onDeletePost,onSelectPost } = this.props
+        const { post,comments,vote,onDeletePost,onSelectPost,
+                onCreateComment,onDeleteComment } = this.props
         return (
             <div className="postdetail">
                 <Link className='button' to='/'>Back</Link>
@@ -25,12 +26,16 @@ class PostView extends Component {
                 <div><b>{post.commentCount} comments : </b></div>
                 <div>
                     <Comments
+                        parentId={post.id}
                         comments={comments}
                         vote={vote}
+                        onDeleteComment={onDeleteComment}
                     />
                 </div>
                 <div>
                     <CreateComment
+                        parentId={post.id}
+                        onCreateComment={onCreateComment}
                     />
                 </div>
             </div>

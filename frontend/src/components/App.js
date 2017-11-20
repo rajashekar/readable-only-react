@@ -92,7 +92,7 @@ class App extends Component {
         this.setState({selectedPost: post})
     })
     ReadableAPI.getComments(postid).then((comments) => {
-        this.setState({comments});
+        this.sort("comments", comments,"votes")
     })
   }
 
@@ -133,6 +133,25 @@ class App extends Component {
     })
   }
 
+  createComment = (comment) => {
+    console.log(comment);
+    ReadableAPI.createComment(comment).then((comments) => {
+        this.setState((state) => ({
+            comments: state.comments.concat([comment]),
+            selectedPost: {...state.selectedPost,
+                    commentCount:state.selectedPost.commentCount+1}
+        }))
+    })
+  }
+
+  deleteComment = (commentid) => {
+    ReadableAPI.deleteComment(commentid).then((result) => {
+        this.setUpdatedResults("comments",this.state.comments,result,"votes")
+        this.setState({selectedPost: {...this.state.selectedPost,
+                commentCount:this.state.selectedPost.commentCount-1}});
+    })
+  }
+
   // For rendering categories
   renderCategory = () => {
     const { categories,posts } = this.state
@@ -164,6 +183,8 @@ class App extends Component {
                     this.deletePost(postid)
                 }}
                 onSelectPost={this.onSelectPost}
+                onCreateComment={this.createComment}
+                onDeleteComment={this.deleteComment}
                 onClick={() => {
                     history.push('/')
                 }}
