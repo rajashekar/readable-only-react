@@ -10,7 +10,8 @@ import Timestamp from 'react-timestamp'
 class Comments extends Component {
 
     render() {
-        const {comments,vote,parentId,onDeleteComment} = this.props
+        const {comments,vote,parentId,onDeleteComment,
+                onEditComment,onEditDone,onChangeComment} = this.props
         return (
             <div>
                 {comments.map(comment => (
@@ -20,10 +21,18 @@ class Comments extends Component {
                             <div className="score">{comment.voteScore}</div>
                             <div className="arrow down" onClick={() => vote("comments","downVote",comment.id)}></div>
                         </div>
+                        {comment.edit? 
+                        <div>
+                            <textarea className="edit-text-area" name="body" defaultValue={comment.body} onChange={onChangeComment} placeholder="Add comment.."></textarea>
+                            &nbsp;&nbsp;<a className="edit-link" onClick={() => onEditDone(comment.id)}>Done</a>
+                        </div>
+                        :
                         <div>
                             {comment.body}
+                            &nbsp;&nbsp;<a className="edit-link" onClick={() => onEditComment(comment.id)}>Edit</a>
                             &nbsp;&nbsp;<Link onClick={() => onDeleteComment(comment.id)} to={'/post/'+parentId}>Delete</Link>
                         </div> 
+                        }
                         <div>Comment by {comment.author}</div>
                         <div>posted on <Timestamp time={comment.timestamp/1000}/></div>
                     </div>

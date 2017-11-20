@@ -74,7 +74,7 @@ export const editPost = (post) =>
     .then(data => data)
 
 export const editComment = (comment) =>
-  fetch(`${api}/posts/${comment.id}`, { 
+  fetch(`${api}/comments/${comment.id}`, { 
      method: 'PUT',
      headers: {...headers, 'Content-Type':'application/json'},
      body: JSON.stringify(comment)

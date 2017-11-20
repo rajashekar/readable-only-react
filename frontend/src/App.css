@@ -171,6 +171,17 @@ label {
     text-align: left;
 }
 
+.edit-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.edit-text-area {
+    height: 50px;
+    width: 300px;
+}
+
 @media (max-width: 600px) {
     .col-25, .col-75, input[type=submit] {
         width: 100%;

@@ -11,7 +11,8 @@ class PostView extends Component {
 
     render() {
         const { post,comments,vote,onDeletePost,onSelectPost,
-                onCreateComment,onDeleteComment } = this.props
+                onCreateComment,onDeleteComment,onEditComment,
+                onEditDone,onChangeComment } = this.props
         return (
             <div className="postdetail">
                 <Link className='button' to='/'>Back</Link>
@@ -30,6 +31,9 @@ class PostView extends Component {
                         comments={comments}
                         vote={vote}
                         onDeleteComment={onDeleteComment}
+                        onEditComment={onEditComment}
+                        onChangeComment={onChangeComment}
+                        onEditDone={onEditDone}
                     />
                 </div>
                 <div>

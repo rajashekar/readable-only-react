@@ -20,7 +20,8 @@ class App extends Component {
     posts : [],
     comments: [],
     selectedPost : {},
-    sortBy : 'votes'
+    sortBy : 'votes',
+    modifiedComment : ""
   }
 
    // Initially mount all Categories and all Posts
@@ -92,6 +93,7 @@ class App extends Component {
         this.setState({selectedPost: post})
     })
     ReadableAPI.getComments(postid).then((comments) => {
+        comments.map(c => {c.edit=false;return c;})
         this.sort("comments", comments,"votes")
     })
   }
@@ -152,6 +154,30 @@ class App extends Component {
     })
   }
 
+  editComment = (commentid) => {
+    this.setState((state) => ({
+        comments: state.comments.map(comment => {
+            if(comment.id === commentid) {
+                comment.edit = !comment.edit
+            }
+            return comment;
+        })
+    }))
+  }
+
+  changeComment = (e) => {
+    console.log(e.target.value)
+    this.setState({ modifiedComment: e.target.value });
+  }
+
+  editDone = (commentid) => {
+    var comment = {id:commentid, body:this.state.modifiedComment, timestamp: Date.now()}
+    ReadableAPI.editComment(comment).then((result) => {
+        this.setUpdatedResults("comments",this.state.comments,result,"votes")
+    })
+    this.editComment(commentid)
+  }
+
   // For rendering categories
   renderCategory = () => {
     const { categories,posts } = this.state
@@ -185,6 +211,9 @@ class App extends Component {
                 onSelectPost={this.onSelectPost}
                 onCreateComment={this.createComment}
                 onDeleteComment={this.deleteComment}
+                onEditComment={this.editComment}
+                onEditDone={this.editDone}
+                onChangeComment={this.changeComment}
                 onClick={() => {
                     history.push('/')
                 }}
