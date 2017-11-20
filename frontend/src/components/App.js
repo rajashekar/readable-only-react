@@ -65,6 +65,7 @@ class App extends Component {
             post.body = updatedPost.body
             post.voteScore = updatedPost.voteScore
             post.deleted = updatedPost.deleted
+            post.commentCount = updatedPost.commentCount
         }
         allPosts.push(post)
         return allPosts
@@ -137,12 +138,16 @@ class App extends Component {
 
   createComment = (comment) => {
     console.log(comment);
-    ReadableAPI.createComment(comment).then((comments) => {
+    ReadableAPI.createComment(comment).then((result) => {
+        // first set comments & sort
+        this.sort("comments", [...this.state.comments,result],"votes")
+        //  increment comment count at selected post
         this.setState((state) => ({
-            comments: state.comments.concat([comment]),
             selectedPost: {...state.selectedPost,
                     commentCount:state.selectedPost.commentCount+1}
         }))
+        // increment comment count at posts
+        this.setUpdatedResults("posts",this.state.posts,this.state.selectedPost,this.state.sortBy)
     })
   }
 
@@ -151,6 +156,7 @@ class App extends Component {
         this.setUpdatedResults("comments",this.state.comments,result,"votes")
         this.setState({selectedPost: {...this.state.selectedPost,
                 commentCount:this.state.selectedPost.commentCount-1}});
+        this.setUpdatedResults("posts",this.state.posts,this.state.selectedPost,this.state.sortBy)
     })
   }
 
