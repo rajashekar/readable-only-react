@@ -11,5 +11,7 @@
 
 Go to `localhost:3000` to access the app
 
+# NOTE: Currently this app does NOT use redux. Integration of redux is INPROGRESS
+
 ## API Server
 Information about the API server and how to use it can be found in its [README file](api-server/README.md).
