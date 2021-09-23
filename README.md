@@ -1,4 +1,7 @@
-## Readable App
+# Readable App
+Small Web app built using ReactJS to create posts with comments & votes similar to reddit app. 
+
+### How to run
 *Inorder to start the readable app first start api server with below steps*
 * Install and start the API server
     - `cd api-server`
